@@ -6,7 +6,7 @@
       <h1 class="text-center">Transactions</h1>
     </div>
     <p class="text-center text">
-      Keep registered all the entries and exits in your financial system, to keep your money organized 💰
+      Keep registered all the earnings and outflows in your financial system, to keep your money organized 💰
     </p>
     <div class="data">
       <div class="controls">
@@ -21,7 +21,7 @@
               </select>
             </div>
             <div class="col-12 col-md-6 d-flex justify-content-end">
-              <a class="btn button">New transaction 💰</a>
+              <a class="btn button" @click.prevent="toggleModal">New transaction 💰</a>
             </div>
           </div>
       </div>
@@ -30,7 +30,8 @@
           <span class="visually-hidden">Loading...</span>
         </div>
       </div>
-      <div class="table-responsive" v-else>
+      <template v-else>
+        <div class="table-responsive" >
         <table class="table">
           <thead>
             <tr>
@@ -55,12 +56,13 @@
             
           </tbody>
         </table>
-        <paginate-links for="transactions" :simple="{ prev: 'Back', next: 'Next' }" :classes="{'ul': ['justify-content-center', 'pagination'], 'li': 'page-item', 'a': 'page-link'}"/>
 
-      </div>
+        </div>
+        <paginate-links for="transactions" :simple="{ prev: 'Back', next: 'Next' }" :classes="{'ul': ['justify-content-center', 'pagination'], 'li': 'page-item', 'a': 'page-link'}"/>
+      </template>
     </div>
       
-    <create-modal-component v-if="createModalShow" />
+    <create-modal-component  v-if="createModalShow" v-on:close-create-modal="toggleModal" />
 
   </div>
 
@@ -83,7 +85,7 @@ export default {
       transactions: [],
       transactionFilter: '',
       tableSpinnerStatus: true,
-      createModalShow: true,
+      createModalShow: false,
       paginate: ['transactions'],
     }
   },
@@ -95,6 +97,9 @@ export default {
       let { data } = await axios.get('/transactions/all');
       this.transactions = data.data;
       this.tableSpinnerStatus = !this.tableSpinnerStatus
+    },
+    toggleModal(){
+      this.createModalShow = !this.createModalShow;
     }
   },
   computed:{
@@ -136,42 +141,7 @@ export default {
     .controls{
       font-family: 'Poppins', serif;
       input, select {
-        background: transparent;
-        border: 1px solid #fff;
-        border-radius: 10px;
-        padding: .4rem 1rem;
-        color: #fff;
-        font-size: .8rem;
         width: 40%;
-        @media(max-width: 770px){
-          margin-bottom:.5rem;
-          width: 100%;
-        }
-      }
-      
-      input::placeholder {
-        color: #fff;
-        font-size: .8rem;
-      }
-      select{
-        option {
-          background: #000;
-        }
-      }
-      input:focus,
-      select:focus {
-        outline: none
-      }
-      .button {
-        color: #075696;
-        background: #fff;
-        font-size: .8rem;
-        border-radius: 10px;
-        font-weight: bold;
-        @media(max-width: 770px){
-          width: 100%;
-          margin-bottom:.5rem;
-        }
       }
     }
   }

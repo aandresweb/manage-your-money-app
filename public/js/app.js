@@ -1973,8 +1973,54 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'create-modal-component'
+  name: 'create-modal-component',
+  data: function data() {
+    return {
+      transaction: {
+        description: '',
+        ammount: 0,
+        area: '',
+        date: ''
+      }
+    };
+  },
+  methods: {
+    closeModal: function closeModal() {
+      this.$emit('close-create-modal');
+    },
+    storeTransaction: function storeTransaction() {
+      alert('c');
+    }
+  }
 });
 
 /***/ }),
@@ -2068,6 +2114,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 
 
@@ -2082,7 +2130,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       transactions: [],
       transactionFilter: '',
       tableSpinnerStatus: true,
-      createModalShow: true,
+      createModalShow: false,
       paginate: ['transactions']
     };
   },
@@ -2116,6 +2164,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee);
       }))();
+    },
+    toggleModal: function toggleModal() {
+      this.createModalShow = !this.createModalShow;
     }
   },
   computed: {
@@ -2166,7 +2217,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".modal-custom[data-v-9bd6c46a] {\n  width: 100%;\n  position: fixed;\n  top: 0;\n  left: 0;\n  height: 100vh;\n  z-index: 999;\n  background-color: rgba(0, 0, 0, 0.59);\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n.modal-custom .modal-box[data-v-9bd6c46a] {\n  background: #fff;\n  width: 40%;\n}\n@media (max-width: 770px) {\n.modal-custom .modal-box[data-v-9bd6c46a] {\n    width: 90%;\n}\n}", ""]);
+exports.push([module.i, ".modal-custom[data-v-9bd6c46a] {\n  width: 100%;\n  position: fixed;\n  top: 0;\n  left: 0;\n  min-height: 100vh;\n  z-index: 999;\n  background-color: rgba(0, 0, 0, 0.59);\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n.modal-custom .modal-box[data-v-9bd6c46a] {\n  background: linear-gradient(to left, #005c97, #363795);\n  width: 30%;\n  padding: 2rem 2rem 5rem 2rem;\n  border-radius: 10px;\n}\n.modal-custom .modal-box .close[data-v-9bd6c46a] {\n  color: #Fff;\n  cursor: pointer;\n}\n.modal-custom .modal-box p[data-v-9bd6c46a] {\n  color: #fff;\n}\n.modal-custom .modal-box input[data-v-9bd6c46a], .modal-custom .modal-box select[data-v-9bd6c46a] {\n  width: 100%;\n}\n.modal-custom .modal-box .button[data-v-9bd6c46a] {\n  width: 100%;\n}\n@media (max-width: 770px) {\n.modal-custom .modal-box[data-v-9bd6c46a] {\n    width: 90%;\n    padding: 2rem 1rem 4rem 1rem;\n}\n}", ""]);
 
 // exports
 
@@ -2185,7 +2236,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".hero-custom[data-v-1b4e3eea] {\n  padding-top: 4rem;\n  padding-bottom: 3rem;\n}\n.hero-custom h1[data-v-1b4e3eea] {\n  margin-bottom: 0;\n  font-size: 3rem;\n  font-weight: normal;\n  color: #fff;\n  font-family: \"Poppins\", sans-serif;\n}\n@media (max-width: 770px) {\n.hero-custom h1[data-v-1b4e3eea] {\n    font-size: 2rem;\n}\n}\n.text[data-v-1b4e3eea] {\n  color: #fff;\n  font-family: \"PT Serif\", serif;\n}\n.data[data-v-1b4e3eea] {\n  margin: 4rem 0 4rem 0;\n}\n.data .controls[data-v-1b4e3eea] {\n  font-family: \"Poppins\", serif;\n}\n.data .controls input[data-v-1b4e3eea], .data .controls select[data-v-1b4e3eea] {\n  background: transparent;\n  border: 1px solid #fff;\n  border-radius: 10px;\n  padding: 0.4rem 1rem;\n  color: #fff;\n  font-size: 0.8rem;\n  width: 40%;\n}\n@media (max-width: 770px) {\n.data .controls input[data-v-1b4e3eea], .data .controls select[data-v-1b4e3eea] {\n    margin-bottom: 0.5rem;\n    width: 100%;\n}\n}\n.data .controls input[data-v-1b4e3eea]::-moz-placeholder {\n  color: #fff;\n  font-size: 0.8rem;\n}\n.data .controls input[data-v-1b4e3eea]:-ms-input-placeholder {\n  color: #fff;\n  font-size: 0.8rem;\n}\n.data .controls input[data-v-1b4e3eea]::placeholder {\n  color: #fff;\n  font-size: 0.8rem;\n}\n.data .controls select option[data-v-1b4e3eea] {\n  background: #000;\n}\n.data .controls input[data-v-1b4e3eea]:focus,\n.data .controls select[data-v-1b4e3eea]:focus {\n  outline: none;\n}\n.data .controls .button[data-v-1b4e3eea] {\n  color: #075696;\n  background: #fff;\n  font-size: 0.8rem;\n  border-radius: 10px;\n  font-weight: bold;\n}\n@media (max-width: 770px) {\n.data .controls .button[data-v-1b4e3eea] {\n    width: 100%;\n    margin-bottom: 0.5rem;\n}\n}\n.table-responsive[data-v-1b4e3eea] {\n  margin-top: 1rem;\n  font-family: \"PT Serif\", serif;\n}\n.table-responsive th[data-v-1b4e3eea], .table-responsive td[data-v-1b4e3eea] {\n  color: #fff;\n  border-top-width: 1px;\n  border-left-width: 1px;\n  border-right-width: 1px;\n}", ""]);
+exports.push([module.i, ".hero-custom[data-v-1b4e3eea] {\n  padding-top: 4rem;\n  padding-bottom: 3rem;\n}\n.hero-custom h1[data-v-1b4e3eea] {\n  margin-bottom: 0;\n  font-size: 3rem;\n  font-weight: normal;\n  color: #fff;\n  font-family: \"Poppins\", sans-serif;\n}\n@media (max-width: 770px) {\n.hero-custom h1[data-v-1b4e3eea] {\n    font-size: 2rem;\n}\n}\n.text[data-v-1b4e3eea] {\n  color: #fff;\n  font-family: \"PT Serif\", serif;\n}\n.data[data-v-1b4e3eea] {\n  margin: 4rem 0 4rem 0;\n}\n.data .controls[data-v-1b4e3eea] {\n  font-family: \"Poppins\", serif;\n}\n.data .controls input[data-v-1b4e3eea], .data .controls select[data-v-1b4e3eea] {\n  width: 40%;\n}\n.table-responsive[data-v-1b4e3eea] {\n  margin-top: 1rem;\n  font-family: \"PT Serif\", serif;\n}\n.table-responsive th[data-v-1b4e3eea], .table-responsive td[data-v-1b4e3eea] {\n  color: #fff;\n  border-top-width: 1px;\n  border-left-width: 1px;\n  border-right-width: 1px;\n}", ""]);
 
 // exports
 
@@ -21400,16 +21451,189 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "modal-custom" }, [
+    _c("div", { staticClass: "modal-box" }, [
+      _c("div", { staticClass: "close d-flex justify-content-end" }, [
+        _c(
+          "span",
+          {
+            attrs: { "aria-hidden": "true" },
+            on: {
+              click: function($event) {
+                $event.preventDefault()
+                return _vm.closeModal($event)
+              }
+            }
+          },
+          [_vm._v("×")]
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", { staticClass: "text-center my-4" }, [
+        _vm._v(
+          "Record the information about your transaction to keep your money organized 📈"
+        )
+      ]),
+      _vm._v(" "),
+      _c(
+        "form",
+        {
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.storeTransaction($event)
+            }
+          }
+        },
+        [
+          _c("div", { staticClass: "mb-3" }, [
+            _c("label", { staticClass: "form-label", attrs: { for: "#" } }, [
+              _vm._v("Description:")
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.transaction.description,
+                  expression: "transaction.description"
+                }
+              ],
+              attrs: {
+                type: "text",
+                placeholder: "E.g. 'This is an entry of my job in January...'"
+              },
+              domProps: { value: _vm.transaction.description },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.transaction, "description", $event.target.value)
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "mb-3" }, [
+            _c("label", { staticClass: "form-label", attrs: { for: "#" } }, [
+              _vm._v("Ammount")
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.transaction.ammount,
+                  expression: "transaction.ammount"
+                }
+              ],
+              attrs: { type: "number", placeholder: "E.g. '50.00'" },
+              domProps: { value: _vm.transaction.ammount },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.transaction, "ammount", $event.target.value)
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "mb-3" }, [
+            _c("label", { staticClass: "form-label", attrs: { for: "#" } }, [
+              _vm._v("Area")
+            ]),
+            _vm._v(" "),
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.transaction.area,
+                    expression: "transaction.area"
+                  }
+                ],
+                on: {
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.$set(
+                      _vm.transaction,
+                      "area",
+                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                    )
+                  }
+                }
+              },
+              [
+                _c("option", { attrs: { value: "1" } }, [_vm._v("Enero")]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "2" } }, [_vm._v("Febrero")]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "3" } }, [_vm._v("Marzo")]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "4" } }, [_vm._v("Abril")])
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "mb-4" }, [
+            _c("label", { staticClass: "form-label", attrs: { for: "#" } }, [
+              _vm._v("Date")
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.transaction.date,
+                  expression: "transaction.date"
+                }
+              ],
+              attrs: {
+                type: "text",
+                placeholder: "E.g. '01/01/2021'",
+                disabled: ""
+              },
+              domProps: { value: _vm.transaction.date },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.transaction, "date", $event.target.value)
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _vm._m(0)
+        ]
+      )
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-custom" }, [
-      _c("div", { staticClass: "modal-box" }, [
-        _c("form", { attrs: { action: "#" } })
+    return _c("div", [
+      _c("button", { staticClass: "btn button", attrs: { type: "submit" } }, [
+        _vm._v("Create transaction 💰")
       ])
     ])
   }
@@ -21445,87 +21669,107 @@ var render = function() {
       _vm._v(" "),
       _c("p", { staticClass: "text-center text" }, [
         _vm._v(
-          "\n    Keep registered all the entries and exits in your financial system, to keep your money organized 💰\n  "
+          "\n    Keep registered all the earnings and outflows in your financial system, to keep your money organized 💰\n  "
         )
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "data" }, [
-        _c("div", { staticClass: "controls" }, [
-          _c("div", { staticClass: "row justify-content-between" }, [
-            _c("div", { staticClass: "col-12 col-md-6" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.transactionFilter,
-                    expression: "transactionFilter"
-                  }
-                ],
-                attrs: { type: "text", placeholder: "Search... 🔍" },
-                domProps: { value: _vm.transactionFilter },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
+      _c(
+        "div",
+        { staticClass: "data" },
+        [
+          _c("div", { staticClass: "controls" }, [
+            _c("div", { staticClass: "row justify-content-between" }, [
+              _c("div", { staticClass: "col-12 col-md-6" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.transactionFilter,
+                      expression: "transactionFilter"
                     }
-                    _vm.transactionFilter = $event.target.value
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _vm._m(1)
-            ]),
-            _vm._v(" "),
-            _vm._m(2)
-          ])
-        ]),
-        _vm._v(" "),
-        _vm.tableSpinnerStatus
-          ? _c("div", { staticClass: "text-center py-5" }, [_vm._m(3)])
-          : _c(
-              "div",
-              { staticClass: "table-responsive" },
-              [
-                _c(
-                  "table",
-                  { staticClass: "table" },
-                  [
-                    _vm._m(4),
-                    _vm._v(" "),
-                    _c(
-                      "paginate",
-                      {
-                        attrs: {
-                          name: "transactions",
-                          list: _vm.transactionsFiltered,
-                          per: 10,
-                          tag: "tbody"
-                        }
-                      },
-                      _vm._l(_vm.paginated("transactions"), function(
-                        transaction,
-                        index
-                      ) {
-                        return _c("tr", { key: index }, [
-                          _c("td", [_vm._v(_vm._s(transaction.id))]),
-                          _vm._v(" "),
-                          _c("td", [_vm._v(_vm._s(transaction.description))]),
-                          _vm._v(" "),
-                          _c("td", [_vm._v(_vm._s(transaction.ammount))]),
-                          _vm._v(" "),
-                          _c("td", [_vm._v(_vm._s(transaction.area))]),
-                          _vm._v(" "),
-                          _c("td", [_vm._v(_vm._s(transaction.date))])
-                        ])
-                      }),
-                      0
-                    ),
-                    _vm._v(" "),
-                    _c("tbody")
                   ],
-                  1
-                ),
+                  attrs: { type: "text", placeholder: "Search... 🔍" },
+                  domProps: { value: _vm.transactionFilter },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.transactionFilter = $event.target.value
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _vm._m(1)
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "col-12 col-md-6 d-flex justify-content-end" },
+                [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "btn button",
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.toggleModal($event)
+                        }
+                      }
+                    },
+                    [_vm._v("New transaction 💰")]
+                  )
+                ]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _vm.tableSpinnerStatus
+            ? _c("div", { staticClass: "text-center py-5" }, [_vm._m(2)])
+            : [
+                _c("div", { staticClass: "table-responsive" }, [
+                  _c(
+                    "table",
+                    { staticClass: "table" },
+                    [
+                      _vm._m(3),
+                      _vm._v(" "),
+                      _c(
+                        "paginate",
+                        {
+                          attrs: {
+                            name: "transactions",
+                            list: _vm.transactionsFiltered,
+                            per: 10,
+                            tag: "tbody"
+                          }
+                        },
+                        _vm._l(_vm.paginated("transactions"), function(
+                          transaction,
+                          index
+                        ) {
+                          return _c("tr", { key: index }, [
+                            _c("td", [_vm._v(_vm._s(transaction.id))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(transaction.description))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(transaction.ammount))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(transaction.area))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(transaction.date))])
+                          ])
+                        }),
+                        0
+                      ),
+                      _vm._v(" "),
+                      _c("tbody")
+                    ],
+                    1
+                  )
+                ]),
                 _vm._v(" "),
                 _c("paginate-links", {
                   attrs: {
@@ -21538,12 +21782,16 @@ var render = function() {
                     }
                   }
                 })
-              ],
-              1
-            )
-      ]),
+              ]
+        ],
+        2
+      ),
       _vm._v(" "),
-      _vm.createModalShow ? _c("create-modal-component") : _vm._e()
+      _vm.createModalShow
+        ? _c("create-modal-component", {
+            on: { "close-create-modal": _vm.toggleModal }
+          })
+        : _vm._e()
     ],
     1
   )
@@ -21570,16 +21818,6 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("option", { attrs: { value: "4" } }, [_vm._v("Abril")])
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "col-12 col-md-6 d-flex justify-content-end" },
-      [_c("a", { staticClass: "btn button" }, [_vm._v("New transaction 💰")])]
-    )
   },
   function() {
     var _vm = this

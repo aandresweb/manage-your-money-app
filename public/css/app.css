@@ -11606,6 +11606,68 @@ body {
   max-width: 850px;
 }
 
+input,
+select {
+  background: transparent;
+  border: 1px solid #fff;
+  border-radius: 10px;
+  padding: 0.4rem 1rem;
+  color: #fff;
+  font-size: 0.7rem;
+}
+
+@media (max-width: 770px) {
+  input,
+  select {
+    margin-bottom: 0.5rem;
+    width: 100% !important;
+  }
+}
+
+label {
+  font-size: 0.8rem;
+  color: #fff;
+}
+
+input::-moz-placeholder {
+  color: #fff;
+  font-size: 0.7rem;
+}
+
+input:-ms-input-placeholder {
+  color: #fff;
+  font-size: 0.7rem;
+}
+
+input::placeholder {
+  color: #fff;
+  font-size: 0.7rem;
+}
+
+select option {
+  background: #000;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+}
+
+.button {
+  color: #075696;
+  background: #fff;
+  font-size: 0.8rem;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+@media (max-width: 770px) {
+  .button {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+}
+
 .pagination .page-link {
   cursor: pointer;
   background-color: #001e5f !important;
