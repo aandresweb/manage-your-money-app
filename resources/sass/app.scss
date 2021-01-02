@@ -1,0 +1,31 @@
+//
+@import "./bootstrap/bootstrap.scss";
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&display=swap");
+
+$background-primary: linear-gradient(to left, #005c97, #363795);
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: $background-primary;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 850px;
+}
+
+.pagination {
+    .page-link {
+        cursor: pointer;
+        background-color: #001e5f !important;
+        color: #fff;
+    }
+}
