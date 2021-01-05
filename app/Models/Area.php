@@ -8,6 +8,8 @@ class Area extends Model
 {
     protected $table = "areas";
 
+    protected $fillable = ['name', 'porcent', 'user_id'];
+
     public function transactions()
     {
         return $this->hasMany(Transaction::class);

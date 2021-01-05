@@ -9,6 +9,8 @@ class Transaction extends Model
 {
     protected $table = "transactions";
 
+    protected $fillable = ['ammount', 'description', 'date', 'area_id', 'user_id', 'type'];
+
     public function area()
     {
         return $this->belongsTo(Area::class, 'area_id');

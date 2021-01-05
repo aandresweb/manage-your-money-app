@@ -1,7 +1,7 @@
 <template>
   
   <div class="container">
-    <TopBarComponent />
+    <top-bar-component :logout-route="logoutRoute" :areas-route="areasRoute" :transactions-route="transactionsRoute"/>
     <div class="hero-custom">
       <h1 class="text-center">Transactions</h1>
     </div>
@@ -13,11 +13,11 @@
           <div class="row justify-content-between">
             <div class="col-12 col-md-6">
               <input type="text" placeholder="Search... 🔍" v-model="transactionFilter">
-              <select>
-                <option value="1">Enero</option>
-                <option value="2">Febrero</option>
-                <option value="3">Marzo</option>
-                <option value="4">Abril</option>
+              <select v-model="quantityRows">
+                <option value="5">Show 5</option>
+                <option value="10">Show 10</option>
+                <option value="20">Show 20</option>
+                <option value="50">Show 50</option>
               </select>
             </div>
             <div class="col-12 col-md-6 d-flex justify-content-end">
@@ -37,32 +37,38 @@
             <tr>
               <th scope="col">ID</th>
               <th scope="col">Description</th>
+              <th scope="col">Type</th>
               <th scope="col">Ammount</th>
               <th scope="col">Area</th>
               <th scope="col">Date</th>
+              <th scope="col">Options</th>
             </tr>
           </thead>
-          <paginate name="transactions" :list="transactionsFiltered" :per="10" tag="tbody">
-            <tr v-for="(transaction, index) in paginated('transactions')" :key="index">
+          <paginate name="transactions" :list="transactionsFiltered" :per="parseInt(quantityRows)" tag="tbody">
+            <tr v-for="(transaction, index) in paginated('transactions')" :key="index" :class="typeClass(transaction.type)">
               <td>{{ transaction.id }}</td>
               <td>{{ transaction.description }}</td>
-              <td>{{ transaction.ammount }}</td>
+              <td>{{ transaction.type }}</td>
+              <td>{{ transaction.ammount | pen }}</td>
               <td>{{ transaction.area }}</td>
               <td>{{ transaction.date }}</td>
+              <td class="text-center">
+                <button class="btn btn-sm button" @click.prevent="deleteTransaction(transaction.id)">
+                  <span  aria-hidden="true">&times;</span>
+                </button>
+              </td>
             </tr>
           </paginate>
-
-          <tbody>
-            
-          </tbody>
         </table>
 
         </div>
         <paginate-links for="transactions" :simple="{ prev: 'Back', next: 'Next' }" :classes="{'ul': ['justify-content-center', 'pagination'], 'li': 'page-item', 'a': 'page-link'}"/>
       </template>
     </div>
+
+    <footer-component />
       
-    <create-modal-component  v-if="createModalShow" v-on:close-create-modal="toggleModal" />
+    <create-modal-component v-if="createModalShow" v-on:close-create-modal="toggleModal" v-on:store-transaction="storeTransaction" />
 
   </div>
 
@@ -71,15 +77,19 @@
 <script>
 
 import TopBarComponent from '../TopBarComponent.vue';
+import FooterComponent from '../FooterComponent';
 import CreateModalComponent from './CreateModalComponent.vue';
 import VuePaginate from 'vue-paginate'
 
 export default {
+  name: 'index-transactions-component',
   components:{
     TopBarComponent,
+    FooterComponent,
     VuePaginate,
     CreateModalComponent
   },
+  props: ['logout-route', 'areas-route', 'transactions-route'],
   data() {
     return {
       transactions: [],
@@ -87,6 +97,7 @@ export default {
       tableSpinnerStatus: true,
       createModalShow: false,
       paginate: ['transactions'],
+      quantityRows: 5
     }
   },
   created(){
@@ -98,8 +109,34 @@ export default {
       this.transactions = data.data;
       this.tableSpinnerStatus = !this.tableSpinnerStatus
     },
+    storeTransaction(){
+      this.toggleModal();
+      this.getTransactions();
+      this.tableSpinnerStatus = !this.tableSpinnerStatus;
+    },
+    async deleteTransaction(id){
+      let confirmDelete = confirm('Are you sure do u want to delete this transaction?');
+      if(confirmDelete){
+        try {
+          let { data } = await axios.delete(`transactions/${id}`);
+          this.getTransactions();
+          this.tableSpinnerStatus = !this.tableSpinnerStatus;
+        } catch (error) {
+          console.log(error);
+        };
+        
+      }
+    },
     toggleModal(){
       this.createModalShow = !this.createModalShow;
+    },
+    typeClass(type){
+      if(type === 'EARNING'){
+        return 'positive-row'
+      }
+      return 'negative-row'
+      
+      
     }
   },
   computed:{
@@ -111,49 +148,13 @@ export default {
         transaction.description.toLowerCase().includes(this.transactionFilter.toLowerCase()) ||
         String(transaction.ammount).includes(this.transactionFilter) 
       );
-    }
+    },
   }
 }
 </script>
 
 <style lang="scss" scoped>
   
-  .hero-custom {
-    padding-top: 4rem;
-    padding-bottom: 3rem;
-    h1 {
-      margin-bottom: 0;
-      font-size: 3rem;
-      font-weight: normal;
-      color: #fff;
-      font-family: 'Poppins', sans-serif;
-      @media(max-width: 770px){
-        font-size: 2rem;
-      }
-    }
-  }
-  .text{
-    color: #fff;
-    font-family: 'PT Serif', serif;
-  }
-  .data {
-    margin: 4rem 0 4rem 0;
-    .controls{
-      font-family: 'Poppins', serif;
-      input, select {
-        width: 40%;
-      }
-    }
-  }
-  .table-responsive {
-    margin-top: 1rem;
-    font-family: 'PT Serif', serif;
-    th, td {
-      color: #fff;
-      border-top-width: 1px;
-      border-left-width: 1px;
-      border-right-width: 1px;
-    }
-  }
-  
+
+
 </style>

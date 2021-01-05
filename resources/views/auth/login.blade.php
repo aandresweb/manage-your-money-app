@@ -9,11 +9,7 @@
 </head>
 <body>
     <div id="app">
-        <index-transactions-component 
-            logout-route="{{ route('auth.logout') }}"
-            areas-route="{{ route('areas.index') }}"
-            transactions-route="{{ route('transactions.index') }}"
-        />
+        <login-component />
     </div>
     <script src="{{ asset('js/app.js') }}"></script>
 </body>

@@ -23,6 +23,16 @@
               </a>  
             </small>
           </li>
+          <li class="nav-item dropdown">
+            <a class="dropdown-toggle" id="navbarDropdown" role="button" @click.prevent="openSubmenu" aria-expanded="false" >
+              Menu
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown" v-if="dropdownStatus">
+              <li><a class="dropdown-item" :href="transactionsRoute"><small>Transactions</small></a></li>
+              <li><a class="dropdown-item" :href="areasRoute"><small>Areas</small></a></li>
+              <li><a class="dropdown-item" :href="logoutRoute"><small>Logout</small></a></li>
+            </ul>
+          </li>
         </ul>
       </div>
     </div>
@@ -30,7 +40,15 @@
 
 <script>
 export default {
-
+  props: ['logout-route','transactions-route','areas-route'],
+  data(){
+    return { dropdownStatus: false }
+  },
+  methods: {
+    openSubmenu(){
+      this.dropdownStatus = !this.dropdownStatus
+    }
+  }
 }
 </script>
 
@@ -40,8 +58,17 @@ export default {
         color :#fff;
         font-family: 'Poppins', serif;
         padding: .5rem 0 .5rem 0;
+        font-size: .9rem;
+        text-decoration: unset;
         a{
-            color :#fff
+          color :#fff
+        }
+        .dropdown-item{
+          color: black
+        }
+        .dropdown-menu{
+          display: block;
+          left: -100px;
         }
     }
 
