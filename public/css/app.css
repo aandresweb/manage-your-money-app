@@ -11715,7 +11715,7 @@ select:focus {
 
 .data .controls input,
 .data .controls select {
-  width: 40%;
+  width: 32%;
 }
 
 .table-responsive {

@@ -24,17 +24,17 @@
                     <div class="col-md-6">
                         <div class="mb-2">
                             <label class="form-label" for="type">Type *</label>
-                            <select v-model="transaction.type" id="type">
+                            <select v-model="transaction.type" id="type" @change="enableArea">
                                 <option value="EARNING" selected>EARNING</option>
                                 <option value="OUTFLOW">OUTFLOW</option>
                             </select>
                             <span class="error">{{ transactionErrors.type | checkIfErrorExists }}</span>
                         </div>
-                    </div>
+                    </div>  
                     
               </div>
               <div class="row">
-                  <div class="col-md-6">
+                  <div class="col-md-6" v-if="showAreaStatus">
                     <div class="mb-4">
                         <label class="form-label" for="area">Area *</label>
                         <select v-model="transaction.area" id="area">
@@ -66,6 +66,7 @@ import {es} from 'vuejs-datepicker/dist/locale';
 import Datepicker from 'vuejs-datepicker';
 export default {
     name: 'create-modal-component',
+    props: ['areas'],
     data(){
         return {
             transaction: {
@@ -79,19 +80,15 @@ export default {
             rules :{
                 description: 'required',
                 ammount: 'required',
-                area: 'required',
                 date: 'required',
                 type: 'required'
             },
-            areas: [],
-            es
+            es,
+            showAreaStatus: true
         }
     },
     components:{
         Datepicker
-    },
-    created(){
-        this.getAreas();
     },
     methods: {
         closeModal(){
@@ -114,9 +111,18 @@ export default {
                 this.transactionErrors = validation.errors.all();
             }
         },
-        async getAreas(){
-            let { data } = await axios.get('/areas/all');
-            this.areas = data.data;
+        enableArea(){
+            switch (this.transaction.type) {
+                case 'EARNING':
+                     this.showAreaStatus = !this.showAreaStatus
+                     this.transaction.area = null
+                    break;
+                case 'OUTFLOW':
+                    this.showAreaStatus = !this.showAreaStatus
+                    break;
+                default:
+                    break;
+            }
         }
     },
 }

@@ -2519,6 +2519,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'create-modal-component',
+  props: ['areas'],
   data: function data() {
     return {
       transaction: {
@@ -2532,19 +2533,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       rules: {
         description: 'required',
         ammount: 'required',
-        area: 'required',
         date: 'required',
         type: 'required'
       },
-      areas: [],
-      es: vuejs_datepicker_dist_locale__WEBPACK_IMPORTED_MODULE_2__["es"]
+      es: vuejs_datepicker_dist_locale__WEBPACK_IMPORTED_MODULE_2__["es"],
+      showAreaStatus: true
     };
   },
   components: {
     Datepicker: vuejs_datepicker__WEBPACK_IMPORTED_MODULE_3__["default"]
-  },
-  created: function created() {
-    this.getAreas();
   },
   methods: {
     closeModal: function closeModal() {
@@ -2603,31 +2600,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee, null, [[3, 11]]);
       }))();
     },
-    getAreas: function getAreas() {
-      var _this2 = this;
+    enableArea: function enableArea() {
+      switch (this.transaction.type) {
+        case 'EARNING':
+          this.showAreaStatus = !this.showAreaStatus;
+          this.transaction.area = null;
+          break;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var _yield$axios$get, data;
+        case 'OUTFLOW':
+          this.showAreaStatus = !this.showAreaStatus;
+          break;
 
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                _context2.next = 2;
-                return axios.get('/areas/all');
-
-              case 2:
-                _yield$axios$get = _context2.sent;
-                data = _yield$axios$get.data;
-                _this2.areas = data.data;
-
-              case 5:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2);
-      }))();
+        default:
+          break;
+      }
     }
   }
 });
@@ -2732,6 +2718,48 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2752,11 +2780,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       tableSpinnerStatus: true,
       createModalShow: false,
       paginate: ['transactions'],
-      quantityRows: 5
+      quantityRows: 5,
+      areas: [],
+      toggleTableStatus: false
     };
   },
   created: function created() {
     this.getTransactions();
+    this.getAreas();
   },
   methods: {
     getTransactions: function getTransactions() {
@@ -2786,60 +2817,89 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee);
       }))();
     },
+    getAreas: function getAreas() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var _yield$axios$get2, data;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return axios.get('/areas/all');
+
+              case 2:
+                _yield$axios$get2 = _context2.sent;
+                data = _yield$axios$get2.data;
+                _this2.areas = data.data;
+
+              case 5:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
     storeTransaction: function storeTransaction() {
       this.toggleModal();
       this.getTransactions();
       this.tableSpinnerStatus = !this.tableSpinnerStatus;
     },
     deleteTransaction: function deleteTransaction(id) {
-      var _this2 = this;
+      var _this3 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
         var confirmDelete, _yield$axios$delete, data;
 
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
                 confirmDelete = confirm('Are you sure do u want to delete this transaction?');
 
                 if (!confirmDelete) {
-                  _context2.next = 15;
+                  _context3.next = 15;
                   break;
                 }
 
-                _context2.prev = 2;
-                _context2.next = 5;
+                _context3.prev = 2;
+                _context3.next = 5;
                 return axios["delete"]("transactions/".concat(id));
 
               case 5:
-                _yield$axios$delete = _context2.sent;
+                _yield$axios$delete = _context3.sent;
                 data = _yield$axios$delete.data;
 
-                _this2.getTransactions();
+                _this3.getTransactions();
 
-                _this2.tableSpinnerStatus = !_this2.tableSpinnerStatus;
-                _context2.next = 14;
+                _this3.tableSpinnerStatus = !_this3.tableSpinnerStatus;
+                _context3.next = 14;
                 break;
 
               case 11:
-                _context2.prev = 11;
-                _context2.t0 = _context2["catch"](2);
-                console.log(_context2.t0);
+                _context3.prev = 11;
+                _context3.t0 = _context3["catch"](2);
+                console.log(_context3.t0);
 
               case 14:
                 ;
 
               case 15:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2, null, [[2, 11]]);
+        }, _callee3, null, [[2, 11]]);
       }))();
     },
     toggleModal: function toggleModal() {
       this.createModalShow = !this.createModalShow;
+    },
+    toggleTable: function toggleTable() {
+      this.toggleTableStatus = !this.toggleTableStatus;
     },
     typeClass: function typeClass(type) {
       if (type === 'EARNING') {
@@ -2847,19 +2907,48 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
 
       return 'negative-row';
+    },
+    getAmmountByPorcent: function getAmmountByPorcent(ammount, porcent) {
+      return ammount * (porcent / 100);
     }
   },
   computed: {
     transactionsFiltered: function transactionsFiltered() {
-      var _this3 = this;
+      var _this4 = this;
 
       if (!this.transactionFilter) {
         return this.transactions;
       }
 
       return this.transactions.filter(function (transaction) {
-        return transaction.description.toLowerCase().includes(_this3.transactionFilter.toLowerCase()) || String(transaction.ammount).includes(_this3.transactionFilter);
+        return transaction.description.toLowerCase().includes(_this4.transactionFilter.toLowerCase()) || String(transaction.ammount).includes(_this4.transactionFilter);
       });
+    },
+    splitTransactions: function splitTransactions() {
+      var _this5 = this;
+
+      var totalAreas = [];
+      this.areas.forEach(function (area) {
+        var total = 0;
+
+        _this5.transactions.forEach(function (transaction) {
+          if (transaction.type === 'OUTFLOW') {
+            if (transaction.area.id === area.id) {
+              total -= transaction.ammount;
+            }
+          }
+
+          if (transaction.type === 'EARNING') {
+            total += transaction.ammount * (area.porcent / 100);
+          }
+        });
+
+        totalAreas.push({
+          nombre: area.name,
+          total: total.toFixed(2)
+        });
+      });
+      return totalAreas;
     }
   }
 });
@@ -29211,23 +29300,26 @@ var render = function() {
                     ],
                     attrs: { id: "type" },
                     on: {
-                      change: function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.$set(
-                          _vm.transaction,
-                          "type",
-                          $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        )
-                      }
+                      change: [
+                        function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.$set(
+                            _vm.transaction,
+                            "type",
+                            $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          )
+                        },
+                        _vm.enableArea
+                      ]
                     }
                   },
                   [
@@ -29255,65 +29347,69 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-md-6" }, [
-              _c("div", { staticClass: "mb-4" }, [
-                _c(
-                  "label",
-                  { staticClass: "form-label", attrs: { for: "area" } },
-                  [_vm._v("Area *")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "select",
-                  {
-                    directives: [
+            _vm.showAreaStatus
+              ? _c("div", { staticClass: "col-md-6" }, [
+                  _c("div", { staticClass: "mb-4" }, [
+                    _c(
+                      "label",
+                      { staticClass: "form-label", attrs: { for: "area" } },
+                      [_vm._v("Area *")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "select",
                       {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.transaction.area,
-                        expression: "transaction.area"
-                      }
-                    ],
-                    attrs: { id: "area" },
-                    on: {
-                      change: function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.$set(
-                          _vm.transaction,
-                          "area",
-                          $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.transaction.area,
+                            expression: "transaction.area"
+                          }
+                        ],
+                        attrs: { id: "area" },
+                        on: {
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              _vm.transaction,
+                              "area",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          }
+                        }
+                      },
+                      _vm._l(_vm.areas, function(area, index) {
+                        return _c(
+                          "option",
+                          { key: index, domProps: { value: area.id } },
+                          [_vm._v(_vm._s(area.name))]
                         )
-                      }
-                    }
-                  },
-                  _vm._l(_vm.areas, function(area, index) {
-                    return _c(
-                      "option",
-                      { key: index, domProps: { value: area.id } },
-                      [_vm._v(_vm._s(area.name))]
-                    )
-                  }),
-                  0
-                ),
-                _vm._v(" "),
-                _c("span", { staticClass: "error" }, [
-                  _vm._v(
-                    _vm._s(
-                      _vm._f("checkIfErrorExists")(_vm.transactionErrors.area)
-                    )
-                  )
+                      }),
+                      0
+                    ),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "error" }, [
+                      _vm._v(
+                        _vm._s(
+                          _vm._f("checkIfErrorExists")(
+                            _vm.transactionErrors.area
+                          )
+                        )
+                      )
+                    ])
+                  ])
                 ])
-              ])
-            ]),
+              : _vm._e(),
             _vm._v(" "),
             _c("div", { staticClass: "col-md-6" }, [
               _c(
@@ -29415,7 +29511,13 @@ var render = function() {
         [
           _c("div", { staticClass: "controls" }, [
             _c("div", { staticClass: "row justify-content-between" }, [
-              _c("div", { staticClass: "col-12 col-md-6" }, [
+              _c("div", { staticClass: "col-12 col-md-9" }, [
+                _c(
+                  "a",
+                  { staticClass: "btn button", on: { click: _vm.toggleTable } },
+                  [_vm._v("Change view 🔍")]
+                ),
+                _vm._v(" "),
                 _c("input", {
                   directives: [
                     {
@@ -29484,7 +29586,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "div",
-                { staticClass: "col-12 col-md-6 d-flex justify-content-end" },
+                { staticClass: "col-12 col-md-3 d-flex justify-content-end" },
                 [
                   _c(
                     "a",
@@ -29507,96 +29609,236 @@ var render = function() {
           _vm.tableSpinnerStatus
             ? _c("div", { staticClass: "text-center py-5" }, [_vm._m(1)])
             : [
-                _c("div", { staticClass: "table-responsive" }, [
-                  _c(
-                    "table",
-                    { staticClass: "table" },
-                    [
-                      _vm._m(2),
-                      _vm._v(" "),
-                      _c(
-                        "paginate",
-                        {
-                          attrs: {
-                            name: "transactions",
-                            list: _vm.transactionsFiltered,
-                            per: parseInt(_vm.quantityRows),
-                            tag: "tbody"
-                          }
-                        },
-                        _vm._l(_vm.paginated("transactions"), function(
-                          transaction,
-                          index
-                        ) {
-                          return _c(
-                            "tr",
-                            {
-                              key: index,
-                              class: _vm.typeClass(transaction.type)
-                            },
-                            [
-                              _c("td", [_vm._v(_vm._s(transaction.id))]),
-                              _vm._v(" "),
-                              _c("td", [
-                                _vm._v(_vm._s(transaction.description))
-                              ]),
-                              _vm._v(" "),
-                              _c("td", [_vm._v(_vm._s(transaction.type))]),
-                              _vm._v(" "),
-                              _c("td", [
-                                _vm._v(
-                                  _vm._s(_vm._f("pen")(transaction.ammount))
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("td", [_vm._v(_vm._s(transaction.area))]),
-                              _vm._v(" "),
-                              _c("td", [_vm._v(_vm._s(transaction.date))]),
-                              _vm._v(" "),
-                              _c("td", { staticClass: "text-center" }, [
-                                _c(
-                                  "button",
+                _vm.toggleTableStatus
+                  ? [
+                      _c("div", { staticClass: "table-responsive" }, [
+                        _c(
+                          "table",
+                          { staticClass: "table" },
+                          [
+                            _vm._m(2),
+                            _vm._v(" "),
+                            _c(
+                              "paginate",
+                              {
+                                attrs: {
+                                  name: "transactions",
+                                  list: _vm.transactionsFiltered,
+                                  per: parseInt(_vm.quantityRows),
+                                  tag: "tbody"
+                                }
+                              },
+                              _vm._l(_vm.paginated("transactions"), function(
+                                transaction,
+                                index
+                              ) {
+                                return _c(
+                                  "tr",
                                   {
-                                    staticClass: "btn btn-sm button",
-                                    on: {
-                                      click: function($event) {
-                                        $event.preventDefault()
-                                        return _vm.deleteTransaction(
-                                          transaction.id
-                                        )
-                                      }
-                                    }
+                                    key: index,
+                                    class: _vm.typeClass(transaction.type)
                                   },
                                   [
-                                    _c(
-                                      "span",
-                                      { attrs: { "aria-hidden": "true" } },
-                                      [_vm._v("×")]
-                                    )
+                                    _c("td", [_vm._v(_vm._s(transaction.id))]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _vm._v(_vm._s(transaction.description))
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _vm._v(_vm._s(transaction.type))
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _vm._v(
+                                        _vm._s(
+                                          _vm._f("pen")(transaction.ammount)
+                                        )
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _vm._v(
+                                        _vm._s(
+                                          transaction.area
+                                            ? transaction.area.name
+                                            : "-"
+                                        )
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _vm._v(_vm._s(transaction.date))
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", { staticClass: "text-center" }, [
+                                      _c(
+                                        "button",
+                                        {
+                                          staticClass: "btn btn-sm button",
+                                          on: {
+                                            click: function($event) {
+                                              $event.preventDefault()
+                                              return _vm.deleteTransaction(
+                                                transaction.id
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _c(
+                                            "span",
+                                            {
+                                              attrs: { "aria-hidden": "true" }
+                                            },
+                                            [_vm._v("×")]
+                                          )
+                                        ]
+                                      )
+                                    ])
                                   ]
                                 )
-                              ])
-                            ]
+                              }),
+                              0
+                            )
+                          ],
+                          1
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("paginate-links", {
+                        attrs: {
+                          for: "transactions",
+                          simple: { prev: "Back", next: "Next" },
+                          classes: {
+                            ul: ["justify-content-center", "pagination"],
+                            li: "page-item",
+                            a: "page-link"
+                          }
+                        }
+                      })
+                    ]
+                  : _c("div", { staticClass: "table-responsive" }, [
+                      _c("table", { staticClass: "table" }, [
+                        _c("thead", [
+                          _c(
+                            "tr",
+                            [
+                              _c("th"),
+                              _vm._v(" "),
+                              _vm._l(_vm.areas, function(area, index) {
+                                return _c("th", { key: index }, [
+                                  _vm._v(_vm._s(area.name) + " "),
+                                  _c("small", [
+                                    _vm._v("( " + _vm._s(area.porcent) + "% )")
+                                  ])
+                                ])
+                              }),
+                              _vm._v(" "),
+                              _c("th", [_vm._v("Options")])
+                            ],
+                            2
                           )
-                        }),
-                        0
-                      )
-                    ],
-                    1
-                  )
-                ]),
-                _vm._v(" "),
-                _c("paginate-links", {
-                  attrs: {
-                    for: "transactions",
-                    simple: { prev: "Back", next: "Next" },
-                    classes: {
-                      ul: ["justify-content-center", "pagination"],
-                      li: "page-item",
-                      a: "page-link"
-                    }
-                  }
-                })
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "tbody",
+                          [
+                            _vm._l(_vm.transactionsFiltered, function(
+                              transaction,
+                              index
+                            ) {
+                              return _c(
+                                "tr",
+                                {
+                                  key: index,
+                                  class: _vm.typeClass(transaction.type)
+                                },
+                                [
+                                  _c("td", [
+                                    _vm._v(_vm._s(transaction.description))
+                                  ]),
+                                  _vm._v(" "),
+                                  transaction.area
+                                    ? _vm._l(_vm.areas, function(area, index) {
+                                        return _c("td", { key: index }, [
+                                          transaction.area.id === area.id
+                                            ? _c("span", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    _vm._f("pen")(
+                                                      transaction.ammount
+                                                    )
+                                                  )
+                                                )
+                                              ])
+                                            : _c("span", [_vm._v(" - ")])
+                                        ])
+                                      })
+                                    : _vm._l(_vm.areas, function(area, index) {
+                                        return _c("td", { key: index }, [
+                                          _vm._v(
+                                            _vm._s(
+                                              _vm._f("pen")(
+                                                _vm.getAmmountByPorcent(
+                                                  transaction.ammount,
+                                                  area.porcent
+                                                )
+                                              )
+                                            )
+                                          )
+                                        ])
+                                      }),
+                                  _vm._v(" "),
+                                  _c("td", { staticClass: "text-center" }, [
+                                    _c(
+                                      "button",
+                                      {
+                                        staticClass: "btn btn-sm button",
+                                        on: {
+                                          click: function($event) {
+                                            $event.preventDefault()
+                                            return _vm.deleteTransaction(
+                                              transaction.id
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c(
+                                          "span",
+                                          { attrs: { "aria-hidden": "true" } },
+                                          [_vm._v("×")]
+                                        )
+                                      ]
+                                    )
+                                  ])
+                                ],
+                                2
+                              )
+                            }),
+                            _vm._v(" "),
+                            _c(
+                              "tr",
+                              [
+                                _c("td", [_vm._v("Total")]),
+                                _vm._v(" "),
+                                _vm._l(_vm.splitTransactions, function(
+                                  total,
+                                  index
+                                ) {
+                                  return _c("td", { key: index }, [
+                                    _vm._v(_vm._s(_vm._f("pen")(total.total)))
+                                  ])
+                                })
+                              ],
+                              2
+                            )
+                          ],
+                          2
+                        )
+                      ])
+                    ])
               ]
         ],
         2
@@ -29606,6 +29848,7 @@ var render = function() {
       _vm._v(" "),
       _vm.createModalShow
         ? _c("create-modal-component", {
+            attrs: { areas: _vm.areas },
             on: {
               "close-create-modal": _vm.toggleModal,
               "store-transaction": _vm.storeTransaction

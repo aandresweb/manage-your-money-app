@@ -19,7 +19,7 @@ class Transaction extends JsonResource
             'id'            => $this->id,
             'description'   => $this->description,
             'ammount'       => $this->ammount,
-            'area'          => $this->area->name,
+            'area'          => $this->area,
             'user'          => $this->user->name,
             'date'          => Carbon::parse($this->date)->format('d-m-Y'),
             'type'          => $this->type

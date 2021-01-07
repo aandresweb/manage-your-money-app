@@ -19,7 +19,7 @@ class CreateTransactionsTable extends Migration
             $table->double('ammount');
             $table->enum('type', ['EARNING', 'OUTFLOW'])->default('EARNING');
             $table->date('date');
-            $table->unsignedBigInteger('area_id');
+            $table->unsignedBigInteger('area_id')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->foreign('area_id')->references('id')->on('areas')
                 ->onDelete('cascade')

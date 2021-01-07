@@ -8,10 +8,11 @@
     <p class="text-center text">
       Keep registered all the earnings and outflows in your financial system, to keep your money organized 💰
     </p>
-    <div class="data">
+    <div class="data"> 
       <div class="controls">
           <div class="row justify-content-between">
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-md-9">
+              <a class="btn button" @click="toggleTable">Change view 🔍</a>
               <input type="text" placeholder="Search... 🔍" v-model="transactionFilter">
               <select v-model="quantityRows">
                 <option value="5">Show 5</option>
@@ -20,7 +21,7 @@
                 <option value="50">Show 50</option>
               </select>
             </div>
-            <div class="col-12 col-md-6 d-flex justify-content-end">
+            <div class="col-12 col-md-3 d-flex justify-content-end">
               <a class="btn button" @click.prevent="toggleModal">New transaction 💰</a>
             </div>
           </div>
@@ -31,44 +32,85 @@
         </div>
       </div>
       <template v-else>
-        <div class="table-responsive" >
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">Description</th>
-              <th scope="col">Type</th>
-              <th scope="col">Ammount</th>
-              <th scope="col">Area</th>
-              <th scope="col">Date</th>
-              <th scope="col">Options</th>
-            </tr>
-          </thead>
-          <paginate name="transactions" :list="transactionsFiltered" :per="parseInt(quantityRows)" tag="tbody">
-            <tr v-for="(transaction, index) in paginated('transactions')" :key="index" :class="typeClass(transaction.type)">
-              <td>{{ transaction.id }}</td>
-              <td>{{ transaction.description }}</td>
-              <td>{{ transaction.type }}</td>
-              <td>{{ transaction.ammount | pen }}</td>
-              <td>{{ transaction.area }}</td>
-              <td>{{ transaction.date }}</td>
-              <td class="text-center">
-                <button class="btn btn-sm button" @click.prevent="deleteTransaction(transaction.id)">
-                  <span  aria-hidden="true">&times;</span>
-                </button>
-              </td>
-            </tr>
-          </paginate>
-        </table>
+        <template v-if="toggleTableStatus">
+          <div class="table-responsive" >
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Description</th>
+                <th scope="col">Type</th>
+                <th scope="col">Ammount</th>
+                <th scope="col">Area</th>
+                <th scope="col">Date</th>
+                <th scope="col">Options</th>
+              </tr>
+            </thead>
+            <paginate name="transactions" :list="transactionsFiltered" :per="parseInt(quantityRows)" tag="tbody">
+              <tr v-for="(transaction, index) in paginated('transactions')" :key="index" :class="typeClass(transaction.type)">
+                <td>{{ transaction.id }}</td>
+                <td>{{ transaction.description }}</td>
+                <td>{{ transaction.type }}</td>
+                <td>{{ transaction.ammount | pen }}</td>
+                <td>{{ transaction.area ? transaction.area.name : '-' }}</td>
+                <td>{{ transaction.date }}</td>
+                <td class="text-center">
+                  <button class="btn btn-sm button" @click.prevent="deleteTransaction(transaction.id)">
+                    <span  aria-hidden="true">&times;</span>
+                  </button>
+                </td>
+              </tr>
+            </paginate>
+          </table>
 
+          </div>
+          <paginate-links for="transactions" :simple="{ prev: 'Back', next: 'Next' }" :classes="{'ul': ['justify-content-center', 'pagination'], 'li': 'page-item', 'a': 'page-link'}"/>
+        </template>
+
+        <div class="table-responsive" v-else>
+              <table class="table">
+                  <thead>
+                      <tr>
+                          <th></th>
+                          <th v-for="(area, index) in areas" :key="index">{{ area.name }} <small>( {{ area.porcent }}% )</small></th>
+                          <th>Options</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr v-for="(transaction, index) in transactionsFiltered" :key="index" :class="typeClass(transaction.type)">
+                          <td>{{ transaction.description }}</td>
+
+                          <template v-if="transaction.area">
+                            <td v-for="(area, index) in areas" :key="index">
+                              <span v-if="transaction.area.id === area.id">{{ transaction.ammount | pen }}</span>
+                              <span v-else> - </span>
+                            </td>
+                          </template>
+
+                          <template v-else>
+                            <td v-for="(area, index) in areas" :key="index">{{ getAmmountByPorcent(transaction.ammount, area.porcent) | pen }}</td>
+                          </template>
+
+                          <td class="text-center">
+                            <button class="btn btn-sm button" @click.prevent="deleteTransaction(transaction.id)">
+                              <span  aria-hidden="true">&times;</span>
+                            </button>
+                          </td>
+                      </tr>
+                      <tr>
+                        <td>Total</td>
+                        <td v-for="(total, index) in splitTransactions" :key="index">{{ total.total | pen }}</td>
+                      </tr>
+                  </tbody>
+              </table>
         </div>
-        <paginate-links for="transactions" :simple="{ prev: 'Back', next: 'Next' }" :classes="{'ul': ['justify-content-center', 'pagination'], 'li': 'page-item', 'a': 'page-link'}"/>
+
       </template>
     </div>
 
     <footer-component />
       
-    <create-modal-component v-if="createModalShow" v-on:close-create-modal="toggleModal" v-on:store-transaction="storeTransaction" />
+    <create-modal-component :areas="areas" v-if="createModalShow" v-on:close-create-modal="toggleModal" v-on:store-transaction="storeTransaction" />
 
   </div>
 
@@ -97,17 +139,24 @@ export default {
       tableSpinnerStatus: true,
       createModalShow: false,
       paginate: ['transactions'],
-      quantityRows: 5
+      quantityRows: 5,
+      areas: [],
+      toggleTableStatus: false,
     }
   },
   created(){
     this.getTransactions();
+    this.getAreas();
   },
   methods: {
     async getTransactions(){
       let { data } = await axios.get('/transactions/all');
       this.transactions = data.data;
       this.tableSpinnerStatus = !this.tableSpinnerStatus
+    },
+    async getAreas(){
+        let { data } = await axios.get('/areas/all');
+        this.areas = data.data;
     },
     storeTransaction(){
       this.toggleModal();
@@ -130,13 +179,17 @@ export default {
     toggleModal(){
       this.createModalShow = !this.createModalShow;
     },
+    toggleTable(){
+      this.toggleTableStatus = !this.toggleTableStatus
+    },
     typeClass(type){
       if(type === 'EARNING'){
         return 'positive-row'
       }
       return 'negative-row'
-      
-      
+    },
+    getAmmountByPorcent(ammount, porcent){
+      return ammount * ( porcent / 100 )
     }
   },
   computed:{
@@ -149,6 +202,31 @@ export default {
         String(transaction.ammount).includes(this.transactionFilter) 
       );
     },
+    splitTransactions(){
+      let totalAreas = [];
+    
+      this.areas.forEach((area) => {
+          
+          let total = 0;
+          
+          this.transactions.forEach(transaction => {
+              if(transaction.type === 'OUTFLOW' ){
+                  if(transaction.area.id === area.id) {
+                    total -= transaction.ammount
+                  }
+              }
+              if(transaction.type === 'EARNING'){
+                  total += transaction.ammount * (area.porcent / 100);
+              }
+          });
+          
+          totalAreas.push({
+              nombre: area.name,
+              total: total.toFixed(2)
+          });
+      });
+      return totalAreas;
+    }
   }
 }
 </script>
