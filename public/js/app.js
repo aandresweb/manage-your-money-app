@@ -2755,11 +2755,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
 
 
 
@@ -29537,51 +29532,7 @@ var render = function() {
                       _vm.transactionFilter = $event.target.value
                     }
                   }
-                }),
-                _vm._v(" "),
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.quantityRows,
-                        expression: "quantityRows"
-                      }
-                    ],
-                    on: {
-                      change: function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.quantityRows = $event.target.multiple
-                          ? $$selectedVal
-                          : $$selectedVal[0]
-                      }
-                    }
-                  },
-                  [
-                    _c("option", { attrs: { value: "5" } }, [_vm._v("Show 5")]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "10" } }, [
-                      _vm._v("Show 10")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "20" } }, [
-                      _vm._v("Show 20")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "50" } }, [
-                      _vm._v("Show 50")
-                    ])
-                  ]
-                )
+                })
               ]),
               _vm._v(" "),
               _c(

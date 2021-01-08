@@ -1,3 +1,15 @@
-## About Laravel
+## Manage your money
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling.
+### Installation
+
+Clone repository
+
+```
+git clone https://github.com/aandresweb/manage-your-money-app
+```
+
+Move to folder's project
+
+```
+cd manage-your-money-app
+```

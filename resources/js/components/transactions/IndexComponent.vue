@@ -14,12 +14,7 @@
             <div class="col-12 col-md-9">
               <a class="btn button" @click="toggleTable">Change view 🔍</a>
               <input type="text" placeholder="Search... 🔍" v-model="transactionFilter">
-              <select v-model="quantityRows">
-                <option value="5">Show 5</option>
-                <option value="10">Show 10</option>
-                <option value="20">Show 20</option>
-                <option value="50">Show 50</option>
-              </select>
+
             </div>
             <div class="col-12 col-md-3 d-flex justify-content-end">
               <a class="btn button" @click.prevent="toggleModal">New transaction 💰</a>
