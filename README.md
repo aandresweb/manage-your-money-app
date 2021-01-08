@@ -1,5 +1,7 @@
 ## Manage your money
 
+This is a system made with Laravel and Vue to help keep registered all the earnings and outflows in this financial system, to keep your money organized 💰
+
 ### Installation
 
 Clone repository
