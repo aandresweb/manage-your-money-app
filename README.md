@@ -26,6 +26,11 @@ npm i
 ```
 Set name and credentiales to setup your connection to database
 
+```env
+DB_DATABASE=database_example
+DB_USERNAME=user_example
+DB_PASSWORD=password_example
+```
 
 Migrate tables 
 ```
