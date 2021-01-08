@@ -24,7 +24,7 @@ Run the following script to install **package.json** dependencies
 ```
 npm i
 ```
-Set name and credentiales to setup your connection to database
+Rename **.env.example** to just **.env** and set name and credentiales to setup your connection to database
 
 ```env
 DB_DATABASE=database_example
@@ -34,5 +34,5 @@ DB_PASSWORD=password_example
 
 Migrate tables 
 ```
-php artisan make:migrate
+php artisan migrate
 ```
