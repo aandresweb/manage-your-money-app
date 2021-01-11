@@ -37,4 +37,4 @@ Migrate tables
 php artisan migrate
 ```
 
-[DEMO](https://www.google.com)b
+[DEMO](https://www.google.com)
