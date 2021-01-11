@@ -36,6 +36,12 @@ DB_USERNAME=user_example
 DB_PASSWORD=password_example
 ```
 
+Dont forget generate an APP_KEY, you can do this using this script
+
+```
+php artisan key:generate
+```
+
 Migrate tables
 
 ```
