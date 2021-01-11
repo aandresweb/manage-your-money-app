@@ -11798,6 +11798,12 @@ select:focus {
   font-family: "Poppins";
 }
 
+@media (max-width: 770px) {
+  .login .box {
+    width: 100%;
+  }
+}
+
 .login .box p {
   color: #fff;
 }
