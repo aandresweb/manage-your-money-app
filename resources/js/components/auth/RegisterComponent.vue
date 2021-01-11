@@ -74,9 +74,9 @@ export default {
             if(validationStatus){
                 this.userErrors = {}
                 try {
-                    this.loginSpinnerStatus = !this.loginSpinnerStatus
+                    this.registerSpinnerStatus = !this.registerSpinnerStatus
                     let { data } = await axios.post('/register', this.user)
-                    this.loginSpinnerStatus = !this.loginSpinnerStatus
+                    this.registerSpinnerStatus = !this.registerSpinnerStatus
                     this.registerResponse = data.message
                     
                 } catch (error) {

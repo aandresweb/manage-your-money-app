@@ -2538,14 +2538,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 _this.userErrors = {};
                 _context.prev = 4;
-                _this.loginSpinnerStatus = !_this.loginSpinnerStatus;
+                _this.registerSpinnerStatus = !_this.registerSpinnerStatus;
                 _context.next = 8;
                 return axios.post('/register', _this.user);
 
               case 8:
                 _yield$axios$post = _context.sent;
                 data = _yield$axios$post.data;
-                _this.loginSpinnerStatus = !_this.loginSpinnerStatus;
+                _this.registerSpinnerStatus = !_this.registerSpinnerStatus;
                 _this.registerResponse = data.message;
                 _context.next = 17;
                 break;
@@ -46030,8 +46030,8 @@ Vue.filter('pen', function (value) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\app_accounting_v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\app_accounting_v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\aandresweb\manage-your-money-app\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\aandresweb\manage-your-money-app\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
