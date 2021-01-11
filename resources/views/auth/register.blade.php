@@ -9,7 +9,7 @@
 </head>
 <body>
     <div id="app">
-        <login-component register-route="{{ route('auth.register') }}" />
+        <register-component login-route="{{ route('auth.login') }}" />
     </div>
     <script src="{{ asset('js/app.js') }}"></script>
 </body>

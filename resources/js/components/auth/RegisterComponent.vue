@@ -1,16 +1,21 @@
 <template>
     <div class="container">
         <div class="login">
-            <div class="text-center py-5" v-if="loginSpinnerStatus">
+            <div class="text-center py-5" v-if="registerSpinnerStatus">
                 <div class="spinner-border text-light" role="status">
                 <span class="visually-hidden">Loading...</span>
                 </div>
             </div>
             <div class="box" v-else>
                 <p class="text-center mb-3">
-                    Enter your credentials ✌
+                    Enter your information ✌
                 </p>
-                <form @submit.prevent="login" autocomplete="off">
+                <form @submit.prevent="register" autocomplete="off">
+                    <div class="mb-3">
+                        <label class="form-label" for="name">Name *</label>
+                        <input type="text" id="name" placeholder="Name" v-model="user.name">
+                        <span class="error">{{ userErrors.name | checkIfErrorExists }}</span>
+                    </div>
                     <div class="mb-3">
                         <label class="form-label" for="email">Email *</label>
                         <input type="email" id="email" placeholder="Email" v-model="user.email">
@@ -22,15 +27,15 @@
                         <span class="error">{{ userErrors.password | checkIfErrorExists }}</span>
                     </div>
                     <div class="mb-3">
-                        <button type="submit" class="btn button">LOGIN</button>
+                        <button type="submit" class="btn button">REGISTER</button>
                     </div>
                     <p class="text-center">
-                        <small>{{ loginResponse }}</small>
+                        <small>{{ registerResponse }}</small>
                     </p>
                 </form>
                 <p class="text-center">
                     <small>
-                        <a :href="registerRoute">You are not registered yet? 🤔</a>
+                        <a :href="loginRoute">Are you already registered? 🙄</a>
                     </small>
                 </p>
             </div>
@@ -39,39 +44,41 @@
 </template>
 
 <script>
+
 import * as Vailidator from 'validatorjs';
+
 export default {
-    props: ['register-route'],
-    name: 'login-component',
-    data(){
+    props: ['login-route'],
+    data() {
         return {
-            user: {
-                email : '',
+            user:{
+                name:'',
+                email: '',
                 password: ''
             },
             userErrors: {},
             rules: {
+                name: 'required',
                 email : 'required|email',
                 password: 'required'
             },
-            loginSpinnerStatus: false,
-            loginResponse: '',
+            registerSpinnerStatus: false,
+            registerResponse: '',
         }
     },
+    name: 'register-component',
     methods: {
-        async login(){
+        async register(){
             let validation          = new Vailidator(this.user, this.rules)
             let validationStatus    = validation.passes();
             if(validationStatus){
                 this.userErrors = {}
                 try {
                     this.loginSpinnerStatus = !this.loginSpinnerStatus
-                    let { data } = await axios.post('/login', this.user)
+                    let { data } = await axios.post('/register', this.user)
                     this.loginSpinnerStatus = !this.loginSpinnerStatus
-                    this.loginResponse = data.message
-                    if(data.success){
-                        location.reload();
-                    }
+                    this.registerResponse = data.message
+                    
                 } catch (error) {
                     console.log(error)
                 }
@@ -79,13 +86,11 @@ export default {
             else{
                 this.userErrors = validation.errors.all();
             }
-            
-            
         }
     }
 }
 </script>
 
-<style lang="scss" scoped>
-    
+<style scoped>
+
 </style>
