@@ -14,7 +14,7 @@ class CreateTransactionsTable extends Migration
     public function up()
     {
         Schema::create('transactions', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('description');
             $table->double('ammount');
             $table->enum('type', ['EARNING', 'OUTFLOW'])->default('EARNING');
