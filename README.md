@@ -48,4 +48,4 @@ Migrate tables
 php artisan migrate
 ```
 
-[DEMO](https://www.google.com)
+[DEMO](http://manage-your-money.aandresweb.com/)
